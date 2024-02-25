@@ -1,0 +1,14 @@
+{
+    "compilerOptions": {
+        "lib": ["ESNext"],
+        "strict": true,
+        "module": "CommonJS",
+        "moduleResolution": "Node",
+        "esModuleInterop": true,
+        "target": "ES6",
+        "outDir": "./dist",
+        "rootDir": "src",
+        "downlevelIteration": true,
+        "sourceMap": true
+    }
+}
