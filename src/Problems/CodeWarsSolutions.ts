@@ -58,3 +58,79 @@ export function optimizedFindEvenIndex(arr: number[]): number {
   }
   return -1;
 }
+
+export function solution(number: number): string {
+  const romanNumbers : {[key: string]:number} = {
+    I: 1,
+    V: 5,
+    X: 10,
+    L: 50,
+    C: 100,
+    D: 500,
+    M: 1000
+  };
+
+  let result = '';
+  for (const key of Object.keys(romanNumbers).reverse()) {
+    const value = romanNumbers[key];
+    
+    while (number >= value) {
+      result += key;
+      number -= value;
+    }
+  }
+
+  return result;
+}
+
+export function createPhoneNumber(numbers: number[]): string {
+  const zoneNumber = numbers.slice(0,3).join("");
+  const firstNumber = numbers.slice(3,6).join("");
+  const lastNumber = numbers.slice(6-10).join("");
+  return `(${zoneNumber}) ${firstNumber}-${lastNumber}`
+}
+
+export const productFib = (prod: number): [number, number, boolean] => {
+  let [prev, curr] = [0, 1];
+  let isProductFib = false;
+
+  while (prev * curr < prod) {
+      [prev, curr] = [curr, prev + curr];
+  }
+
+  if (prev * curr === prod) {
+      isProductFib = true;
+  }
+
+  return [prev, curr, isProductFib];
+};
+
+export function revRot(s:string, sz:number): string {
+  if (sz <= 0 || s.length === 0 || sz > s.length) return "";
+
+  const arr = s.split("").map(c=> Number(c))
+  const chunks:string[] = [];
+
+  let str = ""
+  for (let i = 0; i < arr.length; i+=sz) {
+    const chunk = arr.slice(i, i+sz)
+    if(chunk.length == sz){
+      let result = 0
+      chunk.forEach((num:any)=>{
+        result += num**3;
+      })
+      if(result % 2 == 0){
+        str +=chunk.reverse().join("");
+        chunks.push(chunk.reverse().join(""))
+      } 
+      else{
+        chunk.push(chunk[0]);
+        chunk.shift()
+        chunks.push(chunk.join(""));
+      }
+      str +=chunk.reverse().join("");
+      
+    }
+  }
+  return chunks.join("")
+}
