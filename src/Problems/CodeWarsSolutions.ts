@@ -90,6 +90,15 @@ export function createPhoneNumber(numbers: number[]): string {
   return `(${zoneNumber}) ${firstNumber}-${lastNumber}`
 }
 
+export function createPhoneNumberAlternate(numbers: number[]): string {
+  const formattedPhoneNumberTemplate = "(xxx) xxx-xxxx";
+  
+  const formattedPhoneNumber = numbers.reduce((accumulator, currentValue) => {
+    return accumulator.replace("x", String(currentValue));
+  }, formattedPhoneNumberTemplate);
+
+  return formattedPhoneNumber;
+}
 export const productFib = (prod: number): [number, number, boolean] => {
   let [prev, curr] = [0, 1];
   let isProductFib = false;
