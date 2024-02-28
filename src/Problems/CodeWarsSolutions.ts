@@ -60,7 +60,7 @@ export function optimizedFindEvenIndex(arr: number[]): number {
 }
 
 export function solution(number: number): string {
-  const romanNumbers : {[key: string]:number} = {
+  const romanNumbers: { [key: string]: number } = {
     I: 1,
     V: 5,
     X: 10,
@@ -73,7 +73,7 @@ export function solution(number: number): string {
   let result = '';
   for (const key of Object.keys(romanNumbers).reverse()) {
     const value = romanNumbers[key];
-    
+
     while (number >= value) {
       result += key;
       number -= value;
@@ -84,17 +84,17 @@ export function solution(number: number): string {
 }
 
 export function createPhoneNumber(numbers: number[]): string {
-  const zoneNumber = numbers.slice(0,3).join("");
-  const firstNumber = numbers.slice(3,6).join("");
-  const lastNumber = numbers.slice(6-10).join("");
-  return `(${zoneNumber}) ${firstNumber}-${lastNumber}`
+  const zoneNumber = numbers.slice(0, 3).join('');
+  const firstNumber = numbers.slice(3, 6).join('');
+  const lastNumber = numbers.slice(6 - 10).join('');
+  return `(${zoneNumber}) ${firstNumber}-${lastNumber}`;
 }
 
 export function createPhoneNumberAlternate(numbers: number[]): string {
-  const formattedPhoneNumberTemplate = "(xxx) xxx-xxxx";
-  
+  const formattedPhoneNumberTemplate = '(xxx) xxx-xxxx';
+
   const formattedPhoneNumber = numbers.reduce((accumulator, currentValue) => {
-    return accumulator.replace("x", String(currentValue));
+    return accumulator.replace('x', String(currentValue));
   }, formattedPhoneNumberTemplate);
 
   return formattedPhoneNumber;
@@ -104,42 +104,93 @@ export const productFib = (prod: number): [number, number, boolean] => {
   let isProductFib = false;
 
   while (prev * curr < prod) {
-      [prev, curr] = [curr, prev + curr];
+    [prev, curr] = [curr, prev + curr];
   }
 
   if (prev * curr === prod) {
-      isProductFib = true;
+    isProductFib = true;
   }
 
   return [prev, curr, isProductFib];
 };
 
-export function revRot(s:string, sz:number): string {
-  if (sz <= 0 || s.length === 0 || sz > s.length) return "";
+export function revRot(s: string, sz: number): string {
+  if (sz <= 0 || s.length === 0 || sz > s.length) return '';
 
-  const arr = s.split("").map(c=> Number(c))
-  const chunks:string[] = [];
+  const arr = s.split('').map((c) => Number(c));
+  const chunks: string[] = [];
 
-  let str = ""
-  for (let i = 0; i < arr.length; i+=sz) {
-    const chunk = arr.slice(i, i+sz)
-    if(chunk.length == sz){
-      let result = 0
-      chunk.forEach((num:any)=>{
-        result += num**3;
-      })
-      if(result % 2 == 0){
-        str +=chunk.reverse().join("");
-        chunks.push(chunk.reverse().join(""))
-      } 
-      else{
+  let str = '';
+  for (let i = 0; i < arr.length; i += sz) {
+    const chunk = arr.slice(i, i + sz);
+    if (chunk.length == sz) {
+      let result = 0;
+      chunk.forEach((num: any) => {
+        result += num ** 3;
+      });
+      if (result % 2 == 0) {
+        str += chunk.reverse().join('');
+        chunks.push(chunk.reverse().join(''));
+      } else {
         chunk.push(chunk[0]);
-        chunk.shift()
-        chunks.push(chunk.join(""));
+        chunk.shift();
+        chunks.push(chunk.join(''));
       }
-      str +=chunk.reverse().join("");
-      
+      str += chunk.reverse().join('');
     }
   }
-  return chunks.join("")
+
+  return chunks.join('');
 }
+
+export function findMissingLetter(array: string[]): string {
+  let missedLetter = '';
+  for (let i = 0; i < array.length - 1; i++) {
+    const currentCharCode = array[i].charCodeAt(0);
+    const nextCharCode = array[i + 1].charCodeAt(0);
+    if (nextCharCode - currentCharCode > 1) {
+      missedLetter = String.fromCharCode(currentCharCode + 1);
+    }
+  }
+
+  return missedLetter;
+}
+
+export function romanToInteger(roman: string): number {
+  const dictionary: { [key: string]: number } = {
+    I: 1,
+    V: 5,
+    X: 10,
+    L: 50,
+    C: 100,
+    D: 500,
+    M: 1000
+  };
+
+  let number = 0;
+
+  for (let i = 0; i < roman.length; i++) {
+    const currentValue = dictionary[roman[i]]
+    const nextValue = dictionary[roman[i+1]]
+    currentValue < nextValue ? number-= currentValue : number+= currentValue  
+  }
+  return number;
+}
+
+
+export const likes = (peoples : string[]) : string => {
+  switch (peoples.length) {
+    case 0:
+        return "no one likes this";
+    case 1:
+        return `${peoples[0]} likes this`;
+    case 2:
+        return `${peoples[0]} and ${peoples[1]} like this`;
+    case 3: 
+        return `${peoples[0]}, ${peoples[1]} and ${peoples[2]} like this`
+    default:
+        return `${peoples[0]}, ${peoples[1]} and ${peoples.length - 2} others like this`;
+  }
+}
+
+export const REGEXP = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{6,}$/;
